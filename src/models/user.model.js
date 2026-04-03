@@ -6,7 +6,7 @@ import { hashPassword } from "../utils/hash.js"
 export default class UserModel {
     //Métodos
     //Crear un usuario
-    async create(data) {
+    static async create(data) {
         const { name, email, password, role } = data
         return await db.user.create({
             data: {
@@ -19,22 +19,22 @@ export default class UserModel {
         })
     }
     //Obtener todos los usuarios
-    async getAll() {
+    static async getAll() {
         return await db.user.findMany({})
     }
-    //Obtener un usuario por el id
-    async getForId(id) {
-        return await db.user.findFirst({ where: { id } })
+    //Obtener un usuario por un campo particular
+    static async getForId(attribute) {
+        return await db.user.findFirst({ where: { attribute } })
     }
     //Actualizar un usuario por completo o de manera parcial
-    async update(id, data) {
+    static async update(id, data) {
         return await db.user.update({
             where: { id },
             data: { ...data }
         })
     }
     //Eliminar un usuario por el id
-    async remove(id) {
+    static async remove(id) {
         return await db.user.delete({ where: { id } })
     }
 }

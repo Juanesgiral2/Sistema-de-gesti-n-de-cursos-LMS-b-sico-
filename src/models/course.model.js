@@ -5,7 +5,7 @@ import {db} from "../config/dataBase.js"
 export default class CourseModel{
     //Métodos
     //Crear curso
-    async create (data){
+    static async create (data){
         const {title,description,level,instructorId} = data
 
         return await db.course.create({
@@ -19,11 +19,11 @@ export default class CourseModel{
         })
     }
     //Obtener todos los cursos
-    async getAll (){
+    static async getAll (){
         return await db.course.findMany({})
     }
     //Obtener un curso por su id
-    async getForId (id){
+    static async getForId (id){
         return await db.course.findFirst({
             where:{
                 id
@@ -31,7 +31,7 @@ export default class CourseModel{
         })
     }
     //Obtener un curso por un/os atributo/s particulares
-    async getForAtribute (data){
+    static async getForAtribute (data){
         return await db.course.findMany({
             where:{
                 ...data
@@ -39,7 +39,7 @@ export default class CourseModel{
         })
     }
     //Actualizar por completo o de manera parcial un curso
-    async update (id,data){
+    static async update (id,data){
         return await db.course.update({
             where:{
                 id
@@ -50,7 +50,7 @@ export default class CourseModel{
         })
     }
     //Eliminar un curso por el id
-    async remove (id){
+    static async remove (id){
         return await db.course.delete({
             where:{
                 id

@@ -5,7 +5,7 @@ import {db} from "../config/dataBase.js"
 export default class EnrollmentModel{
     //Métodos
     //Crear una inscripción
-    async create (data){
+    static async create (data){
         const {studentId,courseId} = data
 
         return await db.enrollment.create({
@@ -17,7 +17,7 @@ export default class EnrollmentModel{
         })
     }
     //Ver las inscripciones vinculados con el id del usuario activo del sistema
-    async getAll(id){
+    static async getAll(id){
         return await db.enrollment.findMany({
             where:{
                 userId:id
@@ -25,7 +25,7 @@ export default class EnrollmentModel{
         })
     }
     //Eliminar una inscripción por el id
-    async remove (id){
+    static async remove (id){
         return await db.enrollment.delete({
             where:{
                 id
