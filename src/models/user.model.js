@@ -23,18 +23,18 @@ export default class UserModel {
         return await db.user.findMany({})
     }
     //Obtener un usuario por un campo particular
-    static async getForId(attribute) {
+    static async getForAttribute(attribute) {
         return await db.user.findFirst({ where: { attribute } })
     }
     //Actualizar un usuario por completo o de manera parcial
-    static async update(id, data) {
+    static async update(email, data) {
         return await db.user.update({
-            where: { id },
+            where: { email },
             data: { ...data }
         })
     }
-    //Eliminar un usuario por el id
-    static async remove(id) {
-        return await db.user.delete({ where: { id } })
+    //Eliminar un usuario por el email
+    static async remove(email) {
+        return await db.user.delete({ where: { email } })
     }
 }
