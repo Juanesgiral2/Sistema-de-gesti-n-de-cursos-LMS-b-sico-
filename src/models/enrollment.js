@@ -1,7 +1,7 @@
 //Importación de los módulos requeridos
 import {v4 as uuidv4} from "uuid"
 import {db} from "../config/dataBase.js"
-//Declaración de la clase EnrollmentModel
+//Declaración y exportación de la clase EnrollmentModel
 export default class EnrollmentModel{
     //Métodos
     //Crear una inscripción
@@ -21,6 +21,14 @@ export default class EnrollmentModel{
         return await db.enrollment.findMany({
             where:{
                 userId:id
+            }
+        })
+    }
+    //Obtener una inscripción por el id
+    static async getForId(id){
+        return await db.enrollment.findFirst({
+            where:{
+                id
             }
         })
     }
