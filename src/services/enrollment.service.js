@@ -1,0 +1,30 @@
+//Importación de los módulos requeridos
+import EnrollmentModel from "../models/enrollment"
+//Declaración y exportación de la clase EnrollmentService
+export default class EnrollmentService{
+    //Métodos
+    //Crear una inscripción
+    static async createEnrollment(data){
+        return await EnrollmentModel.create(data)
+    }
+    //Ver las inscripciones vinculados con el id del usuario activo del sistema
+    static async getAllEnrollments(id){
+        const enrollments = await EnrollmentModel.getAll(id)
+
+        if(enrollments.length === 0){
+            throw new Error("Aún no has hecho alguna inscripción a un curso")
+        }else{
+            return enrollments
+        }
+    }
+    //Eliminar una inscripción por el id
+    static async deleteEnrollment(id){
+        const found = await EnrollmentModel.getForId(id)
+
+        if(!found){
+            throw new Error("No se encontró la inscripción")
+        }
+
+        return await EnrollmentModel.remove(id)
+    }
+}
