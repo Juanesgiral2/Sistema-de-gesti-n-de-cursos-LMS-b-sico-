@@ -34,7 +34,7 @@ export default class CourseService{
         const courses = await CourseModel.getForAtribute(attribute)
 
         if(courses.length === 0){
-            throw new AppError("No se encontraron cursos con los parámetros proporcionados", 404)
+            return []
         }else{
             return courses
         }
