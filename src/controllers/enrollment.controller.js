@@ -1,17 +1,20 @@
 //Importación de los módulos requeridos
 import EnrollmentService from "../services/enrollment.service.js"
+import logger from "../config/logger.js"
 //Exportación y declaración de la clase EnrollmentController
 export default class EnrollmentController {
     // Crear una inscripción
     static async createEnrollment(req, res, next) {
         try {
             const enrollment = await EnrollmentService.createEnrollment(req.body)
+            logger.info("Inscripción creada exitosamente", { enrollmentId: enrollment.id, body: req.body })
             res.status(201).json({
                 status: "success",
                 message: "Inscripción creada exitosamente",
                 data: enrollment
             })
         } catch (error) {
+            logger.error(error, { body: req.body })
             next(error)
         }
     }
@@ -20,12 +23,14 @@ export default class EnrollmentController {
         try {
             const { id } = req.user
             const enrollments = await EnrollmentService.getAllEnrollments(id)
+            logger.info("Inscripciones obtenidas exitosamente", { userId: id, count: enrollments.length })
             res.status(200).json({
                 status: "success",
                 message: "Inscripciones obtenidas exitosamente",
                 data: enrollments
             })
         } catch (error) {
+            logger.error(error, { userId: req.user?.id })
             next(error)
         }
     }
@@ -34,12 +39,14 @@ export default class EnrollmentController {
         try {
             const { id } = req.params
             await EnrollmentService.deleteEnrollment(id)
+            logger.info("Inscripción eliminada exitosamente", { enrollmentId: id })
             res.status(200).json({
                 status: "success",
                 message: "Inscripción eliminada exitosamente",
                 data: null
             })
         } catch (error) {
+            logger.error(error, { enrollmentId: req.params.id })
             next(error)
         }
     }
