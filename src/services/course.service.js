@@ -1,5 +1,7 @@
 //Importación de los módulos requeridos
-import CourseModel from "../models/course.model";
+import CourseModel from "../models/course.model"
+import AppError from "../utils/errorCustom.js"
+
 //Declaración y exportación de la clase CourseService
 export default class CourseService{
     //Métodos
@@ -12,7 +14,7 @@ export default class CourseService{
         const courses = await CourseModel.getAll()
 
         if(courses.length === 0){
-            throw new Error("Aún no hay cursos registrados")
+            throw new AppError("Aún no hay cursos registrados", 404)
         }else{
             return courses
         }
@@ -22,7 +24,7 @@ export default class CourseService{
         const course = await CourseModel.getForId(id)
 
         if(!course){
-            throw new Error("No se encontró este curso")
+            throw new AppError("No se encontró este curso", 404)
         }else{
             return course
         }
@@ -32,7 +34,7 @@ export default class CourseService{
         const courses = await CourseModel.getForAtribute(attribute)
 
         if(courses.length === 0){
-            throw new Error("No se encontraron cursos con los parámetros proporcionados")
+            throw new AppError("No se encontraron cursos con los parámetros proporcionados", 404)
         }else{
             return courses
         }
@@ -42,7 +44,7 @@ export default class CourseService{
         const found = await CourseModel.getForId(id)
 
         if(!found){
-            throw new Error("No se encontró el curso")
+            throw new AppError("No se encontró el curso", 404)
         }
 
         return await CourseModel.update(id,data)
@@ -52,7 +54,7 @@ export default class CourseService{
         const found = await CourseModel.getForId(id)
 
         if(!found){
-            throw new Error("No se encontró el curso")
+            throw new AppError("No se encontró el curso", 404)
         }
 
         return await CourseModel.remove(id)

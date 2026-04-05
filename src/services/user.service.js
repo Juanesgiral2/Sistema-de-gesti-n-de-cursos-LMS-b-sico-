@@ -1,5 +1,7 @@
 //Importación de los módulos requeridos
 import UserModel from "../models/user.model.js"
+import AppError from "../utils/errorCustom.js" 
+
 //Declaración y exportación de la clase UserService
 export default class UserService{
     //Métodos
@@ -12,7 +14,7 @@ export default class UserService{
         const users = await UserModel.getAll()
 
         if(users.length === 0){
-            throw new Error("Aún no hay usuarios registrados")
+            throw new AppError("Aún no hay usuarios registrados", 404) 
         }else{
             return users
         }
@@ -22,7 +24,7 @@ export default class UserService{
         const user = await UserModel.getForAttribute(attribute)
 
         if(!user){
-            throw new Error("No se encontró el usuario")
+            throw new AppError("No se encontró el usuario", 404)
         }else{
             return user
         }
@@ -30,14 +32,14 @@ export default class UserService{
     //Actualizar un usuario por completo o de manera parcial
     static async update(email,data){
         const exists = await UserModel.getForAttribute(email)
-         if(!exists) throw new Error("Usuario no encontrado")
+        if(!exists) throw new AppError("Usuario no encontrado", 404)
 
         return await UserModel.update(email,data)
     }
-    //Eliminar un usuarios por el email
+    //Eliminar un usuario por el email
     static async deleteUser(email){
         const exists = await UserModel.getForAttribute(email)
-        if(!exists) throw new Error("Usuario no encontrado")
+        if(!exists) throw new AppError("Usuario no encontrado", 404)
 
         return await UserModel.remove(email)
     }

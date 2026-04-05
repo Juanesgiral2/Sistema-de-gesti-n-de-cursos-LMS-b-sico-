@@ -1,5 +1,7 @@
 //Importación de los módulos requeridos
 import EnrollmentModel from "../models/enrollment"
+import AppError from "../utils/errorCustom.js"
+
 //Declaración y exportación de la clase EnrollmentService
 export default class EnrollmentService{
     //Métodos
@@ -12,7 +14,7 @@ export default class EnrollmentService{
         const enrollments = await EnrollmentModel.getAll(id)
 
         if(enrollments.length === 0){
-            throw new Error("Aún no has hecho alguna inscripción a un curso")
+            throw new AppError("Aún no has hecho alguna inscripción a un curso", 404)
         }else{
             return enrollments
         }
@@ -22,7 +24,7 @@ export default class EnrollmentService{
         const found = await EnrollmentModel.getForId(id)
 
         if(!found){
-            throw new Error("No se encontró la inscripción")
+            throw new AppError("No se encontró la inscripción", 404)
         }
 
         return await EnrollmentModel.remove(id)
