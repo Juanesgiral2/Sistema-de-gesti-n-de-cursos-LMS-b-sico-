@@ -12,7 +12,7 @@ const baseLogger = format.combine(
         const meta = Object.keys(metadata).length ? JSON.stringify(metadata) : ""
         const errorStack = stack ?? message
 
-        return `${timestamp} [${level}] ${meta} ${errorStack}`
+        return `\n${timestamp} [${level}] ${meta} ${errorStack}`
     })
 )
 
