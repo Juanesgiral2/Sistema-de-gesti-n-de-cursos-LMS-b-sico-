@@ -1,5 +1,5 @@
+//Importación de los módulos requeridos
 import Joi from "joi"
-
 //Mensajes de error personalizados en español
 const messages = {
     "string.base":         "{{#label}} debe ser texto.",
