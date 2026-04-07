@@ -49,19 +49,33 @@ export default class CourseController {
             next(error)
         }
     }
-    // Obtener cursos por atributo/s particular/es
-    static async getForAttribute(req, res, next) {
+    //Obtener cursos por atributos particulares
+    static async getCoursesOrFilter(req, res, next) {
         try {
-            const attribute = req.query
-            const courses = await CourseService.getForAttribute(attribute)
-            if (courses.length === 0) {
-                logger.warn("No se encontraron cursos con los atributos dados", { query: attribute })
-                return next()
-            } else {
-                logger.info("Cursos encontrados exitosamente", { count: courses.length, query: attribute })
-                res.status(200).json({
+            const hasFilters = Object.keys(req.query).length > 0
+
+            if (hasFilters) {
+                const courses = await CourseService.getForAttribute(req.query)
+                if (courses.length === 0) {
+                    logger.warn("No se encontraron cursos con los atributos dados", { query: req.query })
+                    return res.status(200).json({
+                        status: "success",
+                        message: "No se encontraron cursos con esos criterios",
+                        data: []
+                    })
+                }
+                logger.info("Cursos filtrados exitosamente", { count: courses.length, query: req.query })
+                return res.status(200).json({
                     status: "success",
                     message: "Cursos encontrados exitosamente",
+                    data: courses
+                })
+            } else {
+                const courses = await CourseService.getAllCourses()
+                logger.info("Cursos obtenidos exitosamente", { count: courses.length })
+                return res.status(200).json({
+                    status: "success",
+                    message: "Cursos obtenidos exitosamente",
                     data: courses
                 })
             }

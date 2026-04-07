@@ -16,8 +16,7 @@ courseRouter.post(
 // GET /courses — público
 courseRouter.get(
     "/",
-    CourseController.getForAttribute,
-    CourseController.getAllCourses
+    CourseController.getCoursesOrFilter
 )
 
 // GET /courses/:id — público

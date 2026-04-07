@@ -15,22 +15,58 @@ export default class UserModel {
                 email,
                 password: await hashPassword(password),
                 role
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true
             }
         })
     }
     //Obtener todos los usuarios
     static async getAll() {
-        return await db.user.findMany({})
+        return await db.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true
+            }
+        })
     }
-    //Obtener un usuario por un campo particular
-    static async getForAttribute(attribute) {
-        return await db.user.findFirst({ where: { attribute } })
+    //Obtener un usuario por su email
+    static async getByEmail(email) {
+        return await db.user.findFirst({ where: { email } })
+    }
+    // Versión sin contraseña para respuestas públicas
+    static async getByEmailSafe(email) {
+        return await db.user.findFirst({
+            where: { email },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true
+            }
+        })
     }
     //Actualizar un usuario por completo o de manera parcial
     static async update(email, data) {
         return await db.user.update({
             where: { email },
-            data: { ...data }
+            data: { ...data },
+            // [FIX #10] Excluir el hash de contraseña de la respuesta
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true
+            }
         })
     }
     //Eliminar un usuario por el email

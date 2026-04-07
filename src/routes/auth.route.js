@@ -1,7 +1,7 @@
 // Importación de los módulos requeridos
 import { Router } from "express"
 import AuthController from "../controllers/auth.controller.js"
-import { validate } from "../middlewares/validate.middleware.js"
+import { validate } from "../middlewares/validate.js"
 import { createUserSchema } from "../validators/user.validator.js"
 //Declaración del router de auth
 const authRouter = Router()

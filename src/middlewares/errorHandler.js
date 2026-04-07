@@ -1,5 +1,5 @@
 //Declaración del middleware que maneja los errores globales
-export default errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
     //Error personalizado
     if(err.isOperational){
         return res.status(err.statusCode).json({
@@ -14,3 +14,5 @@ export default errorHandler = (err, req, res, next) => {
         message:"Error interno del servidor"
     })
 }
+
+export default errorHandler

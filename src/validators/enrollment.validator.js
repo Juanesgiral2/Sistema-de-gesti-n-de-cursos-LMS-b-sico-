@@ -7,16 +7,13 @@ const messages = {
     "string.guid":  "{{#label}} debe ser un UUID válido.",
     "any.required": "{{#label}} es obligatorio.",
 }
-//Esquema para creación
-export default createEnrollmentSchema = Joi.object({
-    studentId: Joi.string()
-        .guid({ version: "uuidv4" })
-        .required()
-        .label("El estudiante"),
-
+// También ajustado: solo se valida courseId (studentId se toma del token).
+const createEnrollmentSchema = Joi.object({
     courseId: Joi.string()
         .guid({ version: "uuidv4" })
         .required()
         .label("El curso"),
 
 }).options({ messages, stripUnknown: true })
+
+export default createEnrollmentSchema

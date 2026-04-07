@@ -1,7 +1,7 @@
 //Importación de los módulos requeridos
 import jwt from "jsonwebtoken"
 import AppError from "../utils/errorCustom.js"
-import logger from "../utils/logger.js"
+import logger from "../config/logger.js"
 
 //Declaración de la función para verificar el token
 function verifyToken(req, res, next) {

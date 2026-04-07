@@ -9,9 +9,9 @@ export default class AuthService{
     //Métodos
     //Registrar un usuario
     static async register (data){
-        //Verificar si el usuario existe
         const {email} = data
-        const found = await UserService.getForAttribute(email)
+
+        const found = await UserService.findByEmail(email)
 
         if(found){
             throw new AppError("El usuario ya existe", 409)
@@ -21,8 +21,7 @@ export default class AuthService{
     }
     //Login
     static async login({email, password}){
-        //Verificar que el email sea correcto
-        const userFound = await UserService.getForAttribute(email)
+        const userFound = await UserService.findByEmail(email)
 
         if(!userFound){
             throw new AppError("El email es incorrecto", 404) 

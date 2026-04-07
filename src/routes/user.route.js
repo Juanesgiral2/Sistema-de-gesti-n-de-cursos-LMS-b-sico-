@@ -2,7 +2,7 @@
 import { Router } from "express"
 import UserController from "../controllers/user.controller.js"
 import { verifyToken, hasRole } from "../middlewares/auth.middleware.js"
-import { validate } from "../middlewares/validate.middleware.js"
+import { validate } from "../middlewares/validate.js"
 import { updateUserSchema } from "../validators/user.validator.js"
 //Declaración del userRouter
 const userRouter = Router()

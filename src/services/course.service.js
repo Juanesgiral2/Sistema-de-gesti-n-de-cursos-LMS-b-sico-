@@ -1,5 +1,5 @@
 //Importación de los módulos requeridos
-import CourseModel from "../models/course.model"
+import CourseModel from "../models/course.model.js"
 import AppError from "../utils/errorCustom.js"
 
 //Declaración y exportación de la clase CourseService

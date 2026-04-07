@@ -1,5 +1,5 @@
 //Importación de los módulos requeridos
-import EnrollmentModel from "../models/enrollment"
+import EnrollmentModel from "../models/enrollment.js"
 import AppError from "../utils/errorCustom.js"
 
 //Declaración y exportación de la clase EnrollmentService
@@ -18,6 +18,16 @@ export default class EnrollmentService{
         }else{
             return enrollments
         }
+    }
+    //Oobtener inscripción por id
+    static async getEnrollmentById(id){
+        const enrollment = await EnrollmentModel.getForId(id)
+
+        if(!enrollment){
+            throw new AppError("No se encontró la inscripción", 404)
+        }
+
+        return enrollment
     }
     //Eliminar una inscripción por el id
     static async deleteEnrollment(id){
